@@ -149,7 +149,7 @@ O sistema faz perguntas inteligentes para completar o entendimento:
 - "Qual a complexidade desejada? Simples/Média/Avançada?"
 ```
 
-## Estruturas Geradas
+## Exemplos de Estruturas Geradas
 
 ### Para Projetos Fullstack:
 ```
@@ -184,80 +184,9 @@ app/
 
 ## Exemplo Real de Uso
 
-### 1. Comando Inicial:
-```
-/setup-project-claude sistema de reservas para restaurante com cardápio online, reserva de mesas, pagamentos, painel admin
-```
+Work in progress
 
-### 2. Perguntas Automáticas:
-```
-🤔 Para completar o setup:
-- Tecnologias preferidas: React + Python/Node.js?
-- Banco de dados: PostgreSQL?
-- Pagamentos: Stripe/PayPal?
-- Notificações: Email/SMS?
-- Deploy: AWS/Vercel?
-```
 
-### 3. Geração Automática:
-```
-✅ Criando arquitetura para: sistema-reservas
-
-📁 CLAUDE.md Files:
-   ├── CLAUDE.md (Project orchestrator)
-   ├── frontend/CLAUDE.md (React + Tailwind)
-   └── backend/CLAUDE.md (Python + FastAPI)
-
-📋 Planning Document:
-   └── PRPs/reservas-planning.md
-
-🎯 Feature PRPs:
-   ├── reservas-cardapio.md
-   ├── reservas-booking.md
-   ├── reservas-pagamentos.md
-   ├── reservas-admin.md
-   ├── reservas-database.md
-   ├── reservas-api.md
-   └── reservas-deployment.md
-
-⚡ Execute command: /execute-all-prps reservas
-```
-
-### 4. Execução:
-```
-/execute-all-prps reservas
-
-🎯 Found 8 PRPs | Estimated time: ~6 hours
-Mode: [A] Auto [S] Step-by-step [C] Custom [Q] Quit
-
-[A] ▶️ Executing all automatically...
-✅ reservas-planning (30 min)
-✅ reservas-database (25 min)  
-✅ reservas-api (45 min)
-...
-```
-
-## Vantagens do Sistema
-
-### 🧠 Inteligente
-- **Detecta automaticamente** tecnologias apropriadas
-- **Faz perguntas inteligentes** para completar contexto
-- **Gera arquitetura coerente** entre todos os componentes
-
-### 🎯 Completo
-- **Tudo em um comando** - de ideia a código estruturado
-- **Planning detalhado** antes da implementação
-- **PRPs específicos** para cada funcionalidade
-
-### 🔧 Flexível
-- **Múltiplos modos** de execução (auto/manual/custom)
-- **Recovery de erros** durante execução
-- **Customização** de qualquer parte gerada
-
-### 📊 Transparente
-- **Progress tracking** em tempo real
-- **Logs detalhados** de toda execução
-- **Relatórios finais** com estatísticas
 
 ## Instalação e Setup
 
@@ -273,25 +202,6 @@ cp -r PRPs /seu-projeto/
 # Ou use este repo diretamente
 ```
 
-## Requisitos
-
-- **Claude Code** instalado
-- **Python 3.12+** com `uv` (para PRPs runner)
-- **Git** para versionamento
-- **Node.js** (se usar tecnologias frontend)
-
-## Importante
-
-### ❌ O que NÃO faz automaticamente:
-- **Commits/push** (você controla o git)
-- **Instalação de dependências** (você roda os comandos)
-- **Deploy real** (você executa deploy)
-
-### ✅ O que FAZ automaticamente:
-- **Arquitetura completa** do projeto
-- **Todos os arquivos de configuração**
-- **Implementação do código** via PRPs
-- **Testes e validação** de cada parte
 
 ## Licença
 
@@ -302,7 +212,3 @@ MIT License
 - **Repositório Original**: https://github.com/Wirasm/PRPs-agentic-eng
 - **Autor**: Rasmus Widing  
 - **Website**: https://www.rasmuswiding.com/
-
----
-
-**🚀 Da ideia ao código funcional em minutos, não dias!**
