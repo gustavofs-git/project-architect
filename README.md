@@ -1,370 +1,308 @@
-# PRP (Product Requirement prompts)
+# Project Architect Setup - Framework de Desenvolvimento Assistido por IA
 
-- A collection of prompts i use in my every day work
+## Sobre Este Repositório
 
-## Video Walkthrough
+Este repositório é baseado no trabalho original de Rasmus Widing: https://github.com/Wirasm/PRPs-agentic-eng
 
-👉 https://www.youtube.com/watch?v=KVOZ9s1S9Gk&lc=UgzfwxvFjo6pKEyPo1R4AaABAg
+Framework completo para desenvolvimento assistido por IA que gera arquitetura completa de projetos, incluindo planejamento, configuração e PRPs individuais para cada feature.
 
-### ☕ Support This Work
+## Como Funciona
 
-**Found value in these resources?**
+### 🎯 Fluxo Completo: Da Ideia ao Código
 
-👉 **Buy me a coffee:** https://coff.ee/wirasm
-
-I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
-
-That will help me maintain and improve the resources available for free
-
----
-
-### 🎯 Transform Your Team with AI Engineering Workshops
-
-**Ready to move beyond toy demos to production-ready AI systems?**
-
-👉 **Book a workshop:** https://www.rasmuswiding.com/
-
-✅ **What you'll get:**
-
-- Put your team on a path to become AI power users
-- Learn the exact PRP methodology used by top engineering teams
-- Hands-on training with Claude Code, PRPs, and real codebases
-- From beginner to advanced AI engineering workshops for teams and individuals
-
-💡 **Perfect for:** Engineering teams, Product teams, and developers who want AI that actually works in production
-
-Let's talk!
-Contact me directly at rasmus@widinglabs.com
-
-# AI Engineering Resources for Claude Code
-
-A comprehensive library of assets and context engineering for Agentic Engineering, optimized for Claude Code. This repository provides the Product Requirement Prompt (PRP) methodology, pre-configured commands, and extensive documentation to enable AI-assisted development that delivers production-ready code on the first pass.
-
-## What is PRP?
-
-Product Requirement Prompt (PRP)
-
-## In short
-
-A PRP is PRD + curated codebase intelligence + agent/runbook—the minimum viable packet an AI needs to plausibly ship production-ready code on the first pass.
-
-Product Requirement Prompt (PRP) is a structured prompt methodology first established in summer 2024 with context engineering at heart. A PRP supplies an AI coding agent with everything it needs to deliver a vertical slice of working software—no more, no less.
-
-### How PRP Differs from Traditional PRD
-
-A traditional PRD clarifies what the product must do and why customers need it, but deliberately avoids how it will be built.
-
-A PRP keeps the goal and justification sections of a PRD yet adds three AI-critical layers:
-
-### Context
-
-Precise file paths and content, library versions and library context, code snippets examples. LLMs generate higher-quality code when given direct, in-prompt references instead of broad descriptions. Usage of a ai_docs/ directory to pipe in library and other docs.
-
-## Getting Started
-
-### Option 1: Copy Resources to Your Existing Project
-
-1. **Copy the Claude commands** to your project:
-
-   ```bash
-   # From your project root
-   cp -r /path/to/PRPs-agentic-eng/.claude/commands .claude/
-   ```
-
-2. **Copy the PRP templates and runner**:
-
-   ```bash
-   cp -r /path/to/PRPs-agentic-eng/PRPs/templates PRPs/
-   cp -r /path/to/PRPs-agentic-eng/PRPs/scripts PRPs/
-   cp /path/to/PRPs-agentic-eng/PRPs/README.md PRPs/
-   ```
-
-3. **Copy AI documentation** (optional but recommended):
-   ```bash
-   cp -r /path/to/PRPs-agentic-eng/PRPs/ai_docs PRPs/
-   ```
-
-### Option 2: Clone and Start a New Project
-
-1. **Clone this repository**:
-
-   ```bash
-   git clone https://github.com/Wirasm/PRPs-agentic-eng.git
-   cd PRPs-agentic-eng
-   ```
-
-2. **Create your project structure**:
-
-   ```bash
-   # Example for a Python project
-   mkdir -p src/tests
-   touch src/__init__.py
-   touch pyproject.toml
-   touch CLAUDE.md
-   ```
-
-3. **Initialize with UV** (for Python projects):
-   ```bash
-   uv venv
-   uv sync
-   ```
-
-## Using Claude Commands
-
-The `.claude/commands/` directory contains 12 pre-configured commands that appear as slash commands in Claude Code.
-
-### Available Commands
-
-1. **PRP Creation & Execution**:
-   - `/create-base-prp` - Generate comprehensive PRPs with research
-   - `/execute-base-prp` - Execute PRPs against codebase
-   - `/planning-create` - Create planning documents with diagrams
-   - `/spec-create-adv` - Advanced specification creation
-   - `/spec-execute` - Execute specifications
-
-2. **Code Review & Refactoring**:
-   - `/review-general` - General code review
-   - `/review-staged-unstaged` - Review git changes
-   - `/refactor-simple` - Simple refactoring tasks
-
-3. **Git & GitHub**:
-   - `/create-pr` - Create pull requests
-
-4. **Utilities**:
-   - `/prime-core` - Prime Claude with project context
-   - `/onboarding` - Onboarding process for new team members
-   - `/debug` - Debugging workflow
-
-### How to Use Commands
-
-1. **In Claude Code**, type `/` to see available commands
-2. **Select a command** and provide arguments when prompted
-3. **Example usage**:
-   ```
-   /create-base-prp user authentication system with OAuth2
-   ```
-
-## Using PRPs
-
-### Creating a PRP
-
-1. **Use the template** as a starting point:
-
-   ```bash
-   cp PRPs/templates/prp_base.md PRPs/my-feature.md
-   ```
-
-2. **Fill in the sections**:
-   - Goal: What needs to be built
-   - Why: Business value and user impact
-   - Context: Documentation, code examples, gotchas
-   - Implementation Blueprint: Tasks and pseudocode
-   - Validation Loop: Executable tests
-
-3. **Or use Claude to generate one**:
-   ```
-   /create-base-prp implement user authentication with JWT tokens
-   ```
-
-### Executing a PRP
-
-1. **Using the runner script**:
-
-   ```bash
-   # Interactive mode (recommended for development)
-   uv run PRPs/scripts/prp_runner.py --prp my-feature --interactive
-
-   # Headless mode (for CI/CD)
-   uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format json
-
-   # Streaming JSON (for real-time monitoring)
-   uv run PRPs/scripts/prp_runner.py --prp my-feature --output-format stream-json
-   ```
-
-2. **Using Claude commands**:
-   ```
-   /execute-base-prp PRPs/my-feature.md
-   ```
-
-### PRP Best Practices
-
-1. **Context is King**: Include ALL necessary documentation, examples, and caveats
-2. **Validation Loops**: Provide executable tests/lints the AI can run and fix
-3. **Information Dense**: Use keywords and patterns from the codebase
-4. **Progressive Success**: Start simple, validate, then enhance
-
-### Example PRP Structure
-
-```markdown
-## Goal
-
-Implement user authentication with JWT tokens
-
-## Why
-
-- Enable secure user sessions
-- Support API authentication
-- Replace basic auth with industry standard
-
-## What
-
-JWT-based authentication system with login, logout, and token refresh
-
-### Success Criteria
-
-- [ ] Users can login with email/password
-- [ ] JWT tokens expire after 24 hours
-- [ ] Refresh tokens work correctly
-- [ ] All endpoints properly secured
-
-## All Needed Context
-
-### Documentation & References
-
-- url: https://jwt.io/introduction/
-  why: JWT structure and best practices
-
-- file: src/auth/basic_auth.py
-  why: Current auth pattern to replace
-
-- doc: https://fastapi.tiangolo.com/tutorial/security/oauth2-jwt/
-  section: OAuth2 with Password and JWT
-
-### Known Gotchas
-
-# CRITICAL: Use RS256 algorithm for production
-
-# CRITICAL: Store refresh tokens in httpOnly cookies
-
-# CRITICAL: Implement token blacklist for logout
-
-## Implementation Blueprint
-
-[... detailed implementation plan ...]
-
-## Validation Loop
-
-### Level 1: Syntax & Style
-
-ruff check src/ --fix
-mypy src/
-
-### Level 2: Unit Tests
-
-uv run pytest tests/test_auth.py -v
-
-### Level 3: Integration Test
-
-curl -X POST http://localhost:8000/auth/login \
- -H "Content-Type: application/json" \
- -d '{"email": "test@example.com", "password": "testpass"}'
+**1. Você descreve seu projeto:**
+```
+/setup-project-claude portifolio com hero, about me, contact form, serviços, projetos do YouTube, suporte PT-BR/EN
 ```
 
-## Project Structure Recommendations
+**2. O sistema gera tudo automaticamente:**
+- ✅ **Arquivos CLAUDE.md** customizados (frontend + backend)
+- ✅ **Planning completo** do projeto com arquitetura  
+- ✅ **PRPs individuais** para cada feature (hero, contact, etc.)
+- ✅ **Comando de execução** para rodar todos os PRPs
 
+**3. Você executa tudo em sequência:**
 ```
-your-project/
-|-- .claude/
-|   |-- commands/          # Claude Code commands
-|   `-- settings.json      # Tool permissions
-|-- PRPs/
-|   |-- templates/         # PRP templates
-|   |-- scrips/           # PRP runner
-|   |-- ai_docs/          # Library documentation
-|   |-- completed/        # Finished PRPs
-|   `-- *.md              # Active PRPs
-|-- CLAUDE.md             # Project-specific guidelines
-|-- src/                  # Your source code
-`-- tests/                # Your tests
+/execute-all-prps portfolio
 ```
 
-## Setting Up CLAUDE.md
+## Exemplo Prático
 
-Create a `CLAUDE.md` file in your project root with:
+### Input:
+```
+/setup-project-claude ecommerce com produtos, carrinho, checkout, pagamentos Stripe, admin panel, usando React e Python
+```
 
-1. **Core Principles**: KISS, YAGNI, etc.
-2. **Code Structure**: File size limits, function length
-3. **Architecture**: How your project is organized
-4. **Testing**: Test patterns and requirements
-5. **Style Conventions**: Language-specific guidelines
-6. **Development Commands**: How to run tests, lint, etc.
+### Output Automático:
+```
+📁 Estrutura Criada:
+├── CLAUDE.md                    # Orquestrador geral
+├── frontend/CLAUDE.md           # React + Tailwind
+├── backend/CLAUDE.md            # Python + FastAPI  
+└── PRPs/
+    ├── ecommerce-planning.md    # Planning geral
+    ├── ecommerce-products.md    # Catálogo de produtos
+    ├── ecommerce-cart.md        # Sistema de carrinho
+    ├── ecommerce-checkout.md    # Processo de checkout
+    ├── ecommerce-payments.md    # Integração Stripe
+    ├── ecommerce-admin.md       # Painel administrativo
+    ├── ecommerce-database.md    # Setup do banco
+    ├── ecommerce-api.md         # APIs backend
+    └── ecommerce-deployment.md  # Deploy produção
 
-See the example CLAUDE.md in this repository for a comprehensive template.
+⚡ Comando criado: /execute-all-prps ecommerce
+```
 
-## Advanced Usage
+## Comandos Principais
 
-### Running Multiple Claude Sessions
+### 🏗️ Geração Completa de Projeto
+```bash
+/setup-project-claude [descrição do projeto]
+```
+**O que faz:**
+- Faz perguntas para completar entendimento
+- Gera CLAUDE.md para tecnologias detectadas
+- Cria planning detalhado do projeto
+- Quebra projeto em PRPs individuais
+- Cria comando de execução personalizado
 
-Use Git worktrees for parallel development:
+### 🚀 Execução Automática
+```bash
+/execute-all-prps [nome-do-projeto]
+```
+**O que faz:**
+- Lista todos PRPs do projeto
+- Executa em ordem lógica (database → backend → frontend → deployment)
+- Tracking de progresso em tempo real
+- Handling de erros com opções de recovery
+- Relatório final completo
+
+### 📋 Comandos de Criação Individual
+- `/prp-base-create [feature]` - Cria PRP específico
+- `/prp-planning-create [projeto]` - Só o planning
+- `/prp-task-create [tarefa]` - Task pontual
+
+### ⚙️ Utilitários
+- `/prime-core` - Contextualiza Claude com projeto
+- `/smart-commit` - Commit inteligente
+- `/review-staged-unstaged` - Review antes do commit
+
+## Modos de Execução
+
+### 🤖 Automático (Headless)
+```bash
+/execute-all-prps portfolio
+# Escolhe modo [A] - Executa tudo automaticamente
+```
+
+### 👤 Passo-a-Passo (Interativo)
+```bash
+/execute-all-prps portfolio  
+# Escolhe modo [S] - Pausa entre cada PRP
+```
+
+### 🎯 Seleção Customizada
+```bash
+/execute-all-prps portfolio
+# Escolhe modo [C] - Seleciona PRPs específicos (ex: 1 3 5-7)
+```
+
+## Tipos de Projetos Suportados
+
+### 🌐 Websites/Portfolios
+```bash
+/setup-project-claude portfolio com hero, about, contact, projects, blog
+```
+
+### 🛒 E-commerce
+```bash
+/setup-project-claude loja online com produtos, carrinho, pagamentos, admin
+```
+
+### 📱 Apps Mobile
+```bash
+/setup-project-claude app fitness tracker com exercícios, progresso, social
+```
+
+### 💼 SaaS/Dashboards
+```bash
+/setup-project-claude SaaS analytics com auth, dashboards, billing, APIs
+```
+
+### 📝 Blogs/CMS
+```bash
+/setup-project-claude blog pessoal com posts, comments, newsletter, SEO
+```
+
+## Fluxo de Perguntas Automáticas
+
+O sistema faz perguntas inteligentes para completar o entendimento:
+
+```
+🤔 Perguntas Típicas:
+- "Que tecnologias prefere? React/Vue/Next.js para frontend?"
+- "Backend em Python/Node.js/PHP?"
+- "Precisa de banco de dados? PostgreSQL/MongoDB?"
+- "Onde vai hospedar? Vercel/AWS/Netlify?"
+- "Precisa de autenticação de usuários?"
+- "Algum design system específico?"
+- "Qual a complexidade desejada? Simples/Média/Avançada?"
+```
+
+## Estruturas Geradas
+
+### Para Projetos Fullstack:
+```
+projeto/
+├── CLAUDE.md              # Orquestrador geral
+├── frontend/
+│   ├── CLAUDE.md          # React/Vue específico
+│   └── src/
+├── backend/
+│   ├── CLAUDE.md          # Python/Node específico
+│   └── src/
+└── PRPs/
+    ├── [projeto]-planning.md
+    ├── [projeto]-database.md
+    ├── [projeto]-api.md
+    ├── [projeto]-[feature1].md
+    ├── [projeto]-[feature2].md
+    └── [projeto]-deployment.md
+```
+
+### Para Mobile Apps:
+```
+app/
+├── CLAUDE.md              # Flutter/React Native
+├── lib/                   # Source code
+└── PRPs/
+    ├── app-planning.md
+    ├── app-navigation.md
+    ├── app-features.md
+    └── app-deployment.md
+```
+
+## Exemplo Real de Uso
+
+### 1. Comando Inicial:
+```
+/setup-project-claude sistema de reservas para restaurante com cardápio online, reserva de mesas, pagamentos, painel admin
+```
+
+### 2. Perguntas Automáticas:
+```
+🤔 Para completar o setup:
+- Tecnologias preferidas: React + Python/Node.js?
+- Banco de dados: PostgreSQL?
+- Pagamentos: Stripe/PayPal?
+- Notificações: Email/SMS?
+- Deploy: AWS/Vercel?
+```
+
+### 3. Geração Automática:
+```
+✅ Criando arquitetura para: sistema-reservas
+
+📁 CLAUDE.md Files:
+   ├── CLAUDE.md (Project orchestrator)
+   ├── frontend/CLAUDE.md (React + Tailwind)
+   └── backend/CLAUDE.md (Python + FastAPI)
+
+📋 Planning Document:
+   └── PRPs/reservas-planning.md
+
+🎯 Feature PRPs:
+   ├── reservas-cardapio.md
+   ├── reservas-booking.md
+   ├── reservas-pagamentos.md
+   ├── reservas-admin.md
+   ├── reservas-database.md
+   ├── reservas-api.md
+   └── reservas-deployment.md
+
+⚡ Execute command: /execute-all-prps reservas
+```
+
+### 4. Execução:
+```
+/execute-all-prps reservas
+
+🎯 Found 8 PRPs | Estimated time: ~6 hours
+Mode: [A] Auto [S] Step-by-step [C] Custom [Q] Quit
+
+[A] ▶️ Executing all automatically...
+✅ reservas-planning (30 min)
+✅ reservas-database (25 min)  
+✅ reservas-api (45 min)
+...
+```
+
+## Vantagens do Sistema
+
+### 🧠 Inteligente
+- **Detecta automaticamente** tecnologias apropriadas
+- **Faz perguntas inteligentes** para completar contexto
+- **Gera arquitetura coerente** entre todos os componentes
+
+### 🎯 Completo
+- **Tudo em um comando** - de ideia a código estruturado
+- **Planning detalhado** antes da implementação
+- **PRPs específicos** para cada funcionalidade
+
+### 🔧 Flexível
+- **Múltiplos modos** de execução (auto/manual/custom)
+- **Recovery de erros** durante execução
+- **Customização** de qualquer parte gerada
+
+### 📊 Transparente
+- **Progress tracking** em tempo real
+- **Logs detalhados** de toda execução
+- **Relatórios finais** com estatísticas
+
+## Instalação e Setup
 
 ```bash
-git worktree add -b feature-auth ../project-auth
-git worktree add -b feature-api ../project-api
+# Clone este repositório
+git clone https://github.com/seu-usuario/project-architect-setup.git
+cd project-architect-setup
 
-# Run Claude in each worktree
-cd ../project-auth && claude
-cd ../project-api && claude
+# Para usar em projeto existente:
+cp -r .claude/commands /seu-projeto/.claude/
+cp -r PRPs /seu-projeto/
+
+# Ou use este repo diretamente
 ```
 
-### CI/CD Integration
+## Requisitos
 
-Use the PRP runner in headless mode:
+- **Claude Code** instalado
+- **Python 3.12+** com `uv` (para PRPs runner)
+- **Git** para versionamento
+- **Node.js** (se usar tecnologias frontend)
 
-```yaml
-# GitHub Actions example
-- name: Execute PRP
-  run: |
-    uv run PRPs/scripts/prp_runner.py \
-      --prp implement-feature \
-      --output-format json > result.json
-```
+## Importante
 
-### Custom Commands
+### ❌ O que NÃO faz automaticamente:
+- **Commits/push** (você controla o git)
+- **Instalação de dependências** (você roda os comandos)
+- **Deploy real** (você executa deploy)
 
-Create your own commands in `.claude/commands/`:
+### ✅ O que FAZ automaticamente:
+- **Arquitetura completa** do projeto
+- **Todos os arquivos de configuração**
+- **Implementação do código** via PRPs
+- **Testes e validação** de cada parte
 
-```markdown
-# .claude/commands/my-command.md
-
-# My Custom Command
-
-Do something specific to my project.
-
-## Arguments: $ARGUMENTS
-
-[Your command implementation]
-```
-
-## Resources Included
-
-### Documentation (PRPs/ai_docs/)
-
-- `cc_base.md` - Core Claude Code documentation
-- `cc_actions_sdk.md` - GitHub Actions and SDK integration
-- `cc_best_practices.md` - Best practices guide
-- `cc_settings.md` - Configuration and security
-- `cc_tutorials.md` - Step-by-step tutorials
-
-### Templates (PRPs/templates/)
-
-- `prp_base.md` - Comprehensive PRP template with validation
-- `prp_spec.md` - Specification template
-- `prp_planning_base.md` - Planning template with diagrams
-
-### Example PRP
-
-- `example-from-workshop-mcp-crawl4ai-refactor-1.md` - Real-world refactoring example
-
-## License
+## Licença
 
 MIT License
 
-## Support
+## Referência Original
 
-I spent a considerable amount of time creating these resources and prompts. If you find value in this project, please consider buying me a coffee to support my work.
-
-👉 **Buy me a coffee:** https://coff.ee/wirasm
+- **Repositório Original**: https://github.com/Wirasm/PRPs-agentic-eng
+- **Autor**: Rasmus Widing  
+- **Website**: https://www.rasmuswiding.com/
 
 ---
 
-Remember: The goal is one-pass implementation success through comprehensive context. Happy coding with Claude Code!
+**🚀 Da ideia ao código funcional em minutos, não dias!**
